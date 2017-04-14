@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:solr="http://www.springframework.org/schema/data/solr"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/data/solr http://www.springframework.org/schema/data/solr/spring-solr.xsd">
+  <context:annotation-config/>
+  <context:component-scan base-package="org.springframework.data.search"/>
+
+  <bean class="org.springframework.data.solr.core.SolrTemplate" id="solrTemplate">
+    <constructor-arg ref="solrClient"/>
+  </bean>
+
+  <solr:client core="collection1" id="solrClient" path="classpath:static-schema"/>
+  <solr:repositories base-package="org.springframework.data.solr.repository.autowiring"/>
+</beans>
