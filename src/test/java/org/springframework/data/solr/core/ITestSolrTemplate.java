@@ -15,8 +15,25 @@
  */
 package org.springframework.data.solr.core;
 
-import com.google.common.collect.Lists;
-import lombok.Data;
+import static java.util.Calendar.*;
+import static org.apache.solr.common.params.FacetParams.*;
+import static org.hamcrest.core.Is.*;
+import static org.hamcrest.core.IsEqual.*;
+import static org.hamcrest.core.IsNull.*;
+import static org.junit.Assert.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.beans.Field;
@@ -27,7 +44,12 @@ import org.apache.solr.common.params.FacetParams.FacetRangeInclude;
 import org.apache.solr.common.params.FacetParams.FacetRangeOther;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.Is;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.Page;
@@ -39,28 +61,58 @@ import org.springframework.data.mapping.model.MappingException;
 import org.springframework.data.solr.AbstractITestWithEmbeddedSolrServer;
 import org.springframework.data.solr.ExampleSolrBean;
 import org.springframework.data.solr.UncategorizedSolrException;
-import org.springframework.data.solr.core.query.*;
+import org.springframework.data.solr.core.query.Criteria;
+import org.springframework.data.solr.core.query.DistanceField;
+import org.springframework.data.solr.core.query.FacetAndHighlightQuery;
+import org.springframework.data.solr.core.query.FacetOptions;
 import org.springframework.data.solr.core.query.FacetOptions.FacetSort;
 import org.springframework.data.solr.core.query.FacetOptions.FieldWithDateRangeParameters;
 import org.springframework.data.solr.core.query.FacetOptions.FieldWithFacetParameters;
 import org.springframework.data.solr.core.query.FacetOptions.FieldWithNumericRangeParameters;
+import org.springframework.data.solr.core.query.FacetQuery;
+import org.springframework.data.solr.core.query.Function;
+import org.springframework.data.solr.core.query.GroupOptions;
+import org.springframework.data.solr.core.query.HighlightOptions;
+import org.springframework.data.solr.core.query.IfFunction;
+import org.springframework.data.solr.core.query.Join;
+import org.springframework.data.solr.core.query.PartialUpdate;
+import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.core.query.Query.Operator;
-import org.springframework.data.solr.core.query.result.*;
+import org.springframework.data.solr.core.query.QueryFunction;
+import org.springframework.data.solr.core.query.SimpleFacetAndHighlightQuery;
+import org.springframework.data.solr.core.query.SimpleFacetQuery;
+import org.springframework.data.solr.core.query.SimpleField;
+import org.springframework.data.solr.core.query.SimpleFilterQuery;
+import org.springframework.data.solr.core.query.SimpleHighlightQuery;
+import org.springframework.data.solr.core.query.SimpleQuery;
+import org.springframework.data.solr.core.query.SimpleStringCriteria;
+import org.springframework.data.solr.core.query.SimpleTermsQuery;
+import org.springframework.data.solr.core.query.SimpleUpdateField;
+import org.springframework.data.solr.core.query.SpellcheckOptions;
+import org.springframework.data.solr.core.query.StatsOptions;
+import org.springframework.data.solr.core.query.TermsQuery;
+import org.springframework.data.solr.core.query.Update;
+import org.springframework.data.solr.core.query.UpdateAction;
+import org.springframework.data.solr.core.query.result.Cursor;
+import org.springframework.data.solr.core.query.result.FacetFieldEntry;
+import org.springframework.data.solr.core.query.result.FacetPivotFieldEntry;
+import org.springframework.data.solr.core.query.result.FacetQueryEntry;
+import org.springframework.data.solr.core.query.result.FieldStatsResult;
+import org.springframework.data.solr.core.query.result.GroupEntry;
+import org.springframework.data.solr.core.query.result.GroupPage;
+import org.springframework.data.solr.core.query.result.GroupResult;
+import org.springframework.data.solr.core.query.result.HighlightQueryResult;
+import org.springframework.data.solr.core.query.result.SpellcheckedPage;
+import org.springframework.data.solr.core.query.result.StatsPage;
+import org.springframework.data.solr.core.query.result.StatsResult;
+import org.springframework.data.solr.core.query.result.TermsFieldEntry;
+import org.springframework.data.solr.core.query.result.TermsPage;
 import org.springframework.data.solr.server.support.MulticoreSolrClientFactory;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.util.*;
+import com.google.common.collect.Lists;
 
-import static java.util.Calendar.JANUARY;
-import static java.util.Calendar.NOVEMBER;
-import static org.apache.solr.common.params.FacetParams.FACET_RANGE_INCLUDE;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.*;
+import lombok.Data;
 
 /**
  * @author Christoph Strobl
