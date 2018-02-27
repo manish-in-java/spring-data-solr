@@ -15,11 +15,11 @@
  */
 package org.springframework.data.solr.core;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Christoph Strobl

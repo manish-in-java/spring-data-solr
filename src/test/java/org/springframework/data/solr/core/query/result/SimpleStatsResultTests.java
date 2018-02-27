@@ -15,10 +15,10 @@
  */
 package org.springframework.data.solr.core.query.result;
 
-import java.util.Date;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Date;
 
 /**
  * @author Francisco Spaeth

@@ -15,14 +15,13 @@
  */
 package org.springframework.data.solr.core.schema;
 
-import org.apache.solr.client.solrj.response.SolrResponseBase;
-import org.apache.solr.common.util.NamedList;
-import org.springframework.dao.InvalidDataAccessResourceUsageException;
-
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.solr.client.solrj.response.SolrResponseBase;
+import org.apache.solr.common.util.NamedList;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
 
 /**
  * @author Christoph Strobl

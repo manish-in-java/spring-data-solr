@@ -15,14 +15,14 @@
  */
 package org.springframework.data.solr.core.query.result;
 
+import org.springframework.data.solr.core.query.Field;
+
 import java.util.Collection;
 import java.util.Map;
 
-import org.springframework.data.solr.core.query.Field;
-
 /**
  * Specialization of {@link StatsResult} to represent statistic information for a field.
- * 
+ *
  * @author Francisco Spaeth
  * @since 1.4
  * @see StatsResult
@@ -31,14 +31,14 @@ public interface FieldStatsResult extends StatsResult {
 
 	/**
 	 * Return a map of fieldName associated to value facets for the given {@link FieldStatsResult}.
-	 * 
+	 *
 	 * @return map of field faceting statistics
 	 */
 	Map<String, Map<String, StatsResult>> getFacetStatsResults();
 
 	/**
 	 * Return a map of value associated to its statistics for a given field.
-	 * 
+	 *
 	 * @param value
 	 * @return map of values statistics
 	 */
@@ -46,7 +46,7 @@ public interface FieldStatsResult extends StatsResult {
 
 	/**
 	 * Return a map of value associated to its statistics for a given field name.
-	 * 
+	 *
 	 * @param value
 	 * @return map of values statistics
 	 */
@@ -54,14 +54,14 @@ public interface FieldStatsResult extends StatsResult {
 
 	/**
 	 * Return the count of distinct values for this field.
-	 * 
+	 *
 	 * @return distinct count, {@literal null} when not requested
 	 */
 	Long getDistinctCount();
 
 	/**
 	 * Return the distinct values for this field.
-	 * 
+	 *
 	 * @return
 	 */
 	Collection<Object> getDistinctValues();

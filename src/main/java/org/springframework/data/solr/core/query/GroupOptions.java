@@ -15,17 +15,17 @@
  */
 package org.springframework.data.solr.core.query;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Set of options that could be set for a {@link Query} in order to have grouped results.
- * 
+ *
  * @author Francisco Spaeth
  * @since 1.4
  */
@@ -51,7 +51,7 @@ public class GroupOptions {
 
 	/**
 	 * Adds a group request for a {@link Field}.
-	 * 
+	 *
 	 * @param field
 	 * @return
 	 */
@@ -65,7 +65,7 @@ public class GroupOptions {
 
 	/**
 	 * List of {@link Field}s to perform grouping by.
-	 * 
+	 *
 	 * @return
 	 */
 	public List<Field> getGroupByFields() {
@@ -74,7 +74,7 @@ public class GroupOptions {
 
 	/**
 	 * Adds a group request for a {@link Field} using its name.
-	 * 
+	 *
 	 * @param fieldName
 	 * @return
 	 */
@@ -87,7 +87,7 @@ public class GroupOptions {
 
 	/**
 	 * Adds a group request for a {@link Function} result.
-	 * 
+	 *
 	 * @param function
 	 * @return
 	 */
@@ -100,7 +100,7 @@ public class GroupOptions {
 
 	/**
 	 * List of {@link Function}s to perform grouping by.
-	 * 
+	 *
 	 * @return
 	 */
 	public List<Function> getGroupByFunctions() {
@@ -109,7 +109,7 @@ public class GroupOptions {
 
 	/**
 	 * Adds a group request for a {@link Query} result.
-	 * 
+	 *
 	 * @param query
 	 * @return
 	 */
@@ -122,7 +122,7 @@ public class GroupOptions {
 
 	/**
 	 * List of {@link Query}s to perform grouping by.
-	 * 
+	 *
 	 * @return
 	 */
 	public List<Query> getGroupByQueries() {
@@ -131,7 +131,7 @@ public class GroupOptions {
 
 	/**
 	 * Sets the initial offset of each group.
-	 * 
+	 *
 	 * @param offset
 	 * @return
 	 */
@@ -157,7 +157,7 @@ public class GroupOptions {
 
 	/**
 	 * Sets the number of rows to return for each group.
-	 * 
+	 *
 	 * @param limit
 	 * @return
 	 */
@@ -169,7 +169,7 @@ public class GroupOptions {
 
 	/**
 	 * Adds {@link Sort} to instruct how to sort elements within a single group.
-	 * 
+	 *
 	 * @param sort
 	 * @return
 	 */
@@ -197,7 +197,7 @@ public class GroupOptions {
 
 	/**
 	 * Defines whether the group count should be included in the response.
-	 * 
+	 *
 	 * @param groupCount
 	 * @return
 	 */
@@ -216,7 +216,7 @@ public class GroupOptions {
 
 	/**
 	 * Sets the caching for grouping results.
-	 * 
+	 *
 	 * @param cachePercent
 	 * @return
 	 */
@@ -235,7 +235,7 @@ public class GroupOptions {
 
 	/**
 	 * Defines the maximum size of the group cache.
-	 * 
+	 *
 	 * @param truncateFacets
 	 * @return
 	 */
@@ -254,7 +254,7 @@ public class GroupOptions {
 
 	/**
 	 * Defines whether field facet shall be computed in grouped fashion.
-	 * 
+	 *
 	 * @param groupFacets
 	 * @return
 	 */
@@ -273,7 +273,7 @@ public class GroupOptions {
 
 	/**
 	 * Defines whether or not the first field group result shall be used as main result.
-	 * 
+	 *
 	 * @param groupMain
 	 * @return
 	 */

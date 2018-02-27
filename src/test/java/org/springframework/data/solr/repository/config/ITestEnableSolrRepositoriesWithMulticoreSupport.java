@@ -15,9 +15,6 @@
  */
 package org.springframework.data.solr.repository.config;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-
 import org.apache.solr.client.solrj.SolrClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,9 +25,13 @@ import org.springframework.data.solr.AbstractITestWithEmbeddedSolrServer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+
 /**
  * Integration test for {@link EnableSolrRepositories}.
- * 
+ *
  * @author Christoph Strobl
  */
 @RunWith(SpringJUnit4ClassRunner.class)

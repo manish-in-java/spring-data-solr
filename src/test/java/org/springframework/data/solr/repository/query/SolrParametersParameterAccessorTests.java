@@ -15,9 +15,6 @@
  */
 package org.springframework.data.solr.repository.query;
 
-import java.lang.reflect.Method;
-import java.util.List;
-
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,6 +27,9 @@ import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.core.support.AbstractRepositoryMetadata;
 import org.springframework.data.solr.repository.Boost;
 import org.springframework.data.solr.repository.ProductBean;
+
+import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * @author Christoph Strobl

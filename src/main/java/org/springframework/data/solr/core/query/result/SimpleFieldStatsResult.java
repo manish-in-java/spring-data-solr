@@ -15,17 +15,17 @@
  */
 package org.springframework.data.solr.core.query.result;
 
+import org.springframework.data.solr.core.query.Field;
+import org.springframework.util.Assert;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
-import org.springframework.data.solr.core.query.Field;
-import org.springframework.util.Assert;
-
 /**
  * Trivial implementation of {@link FieldStatsResult}.
- * 
+ *
  * @author Francisco Spaeth
  * @since 1.4
  */

@@ -15,12 +15,12 @@
  */
 package org.springframework.data.solr.core.query;
 
-import java.util.Collection;
-import java.util.Collections;
-
 import org.springframework.data.geo.Box;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Point;
+
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * @author Christoph Strobl
@@ -41,7 +41,7 @@ public abstract class Node {
 
 	/**
 	 * Define {@literal or} nature of {@link Node}
-	 * 
+	 *
 	 * @param isOr
 	 */
 	public void setPartIsOr(boolean isOr) {
@@ -64,7 +64,7 @@ public abstract class Node {
 
 	/**
 	 * Get parent {@link Node}.
-	 * 
+	 *
 	 * @return null in case no parent set.
 	 */
 	public Node getParent() {
@@ -104,7 +104,7 @@ public abstract class Node {
 	// ------ CONJUNCTIONS --------
 	/**
 	 * Combine two {@link Node}s using {@literal and}.
-	 * 
+	 *
 	 * @param part
 	 * @return
 	 */
@@ -112,7 +112,7 @@ public abstract class Node {
 
 	/**
 	 * Combine node with new {@link Node} for given {@literal fieldname} using {@literal and}.
-	 * 
+	 *
 	 * @param part
 	 * @return
 	 */
@@ -120,7 +120,7 @@ public abstract class Node {
 
 	/**
 	 * Combine two {@link Node}s using {@literal or}.
-	 * 
+	 *
 	 * @param part
 	 * @return
 	 */
@@ -128,7 +128,7 @@ public abstract class Node {
 
 	/**
 	 * Combine node with new {@link Node} for given {@literal fieldname} using {@literal and}.
-	 * 
+	 *
 	 * @param part
 	 * @return
 	 */

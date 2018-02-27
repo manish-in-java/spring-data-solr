@@ -15,11 +15,6 @@
  */
 package org.springframework.data.solr.repository.config;
 
-import java.lang.annotation.Annotation;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
@@ -28,11 +23,7 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.core.annotation.AnnotationAttributes;
-import org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource;
-import org.springframework.data.repository.config.RepositoryConfigurationExtension;
-import org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport;
-import org.springframework.data.repository.config.RepositoryConfigurationSource;
-import org.springframework.data.repository.config.XmlRepositoryConfigurationSource;
+import org.springframework.data.repository.config.*;
 import org.springframework.data.solr.core.SolrExceptionTranslator;
 import org.springframework.data.solr.core.convert.CustomConversions;
 import org.springframework.data.solr.core.convert.MappingSolrConverter;
@@ -44,10 +35,15 @@ import org.springframework.data.solr.repository.support.SolrRepositoryFactoryBea
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
 
+import java.lang.annotation.Annotation;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 /**
  * {@link RepositoryConfigurationExtension} implementation to configure Solr repository configuration support,
  * evaluating the {@link EnableSolrRepositories} annotation or the equivalent XML element.
- * 
+ *
  * @author Oliver Gierke
  * @author Christoph Strobl
  */
@@ -85,7 +81,7 @@ public class SolrRepositoryConfigExtension extends RepositoryConfigurationExtens
 		return "solr";
 	}
 
-	/* 
+	/*
 	 * (non-Javadoc)
 	 * @see org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport#postProcess(org.springframework.beans.factory.support.BeanDefinitionBuilder, org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource)
 	 */
@@ -120,7 +116,7 @@ public class SolrRepositoryConfigExtension extends RepositoryConfigurationExtens
 
 	}
 
-	/* 
+	/*
 	 * (non-Javadoc)
 	 * @see org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport#postProcess(org.springframework.beans.factory.support.BeanDefinitionBuilder, org.springframework.data.repository.config.XmlRepositoryConfigurationSource)
 	 */

@@ -15,15 +15,11 @@
  */
 package org.springframework.data.solr.repository;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * Statistics definition to be performed within a {@link Query}.
- * 
+ *
  * @author Francisco Spaeth
  * @since 1.4
  */

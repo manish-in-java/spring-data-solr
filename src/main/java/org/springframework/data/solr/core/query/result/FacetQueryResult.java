@@ -15,12 +15,12 @@
  */
 package org.springframework.data.solr.core.query.result;
 
-import java.util.Collection;
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.solr.core.query.Field;
 import org.springframework.data.solr.core.query.PivotField;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Hold the results of a solr facet query.

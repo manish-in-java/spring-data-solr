@@ -15,19 +15,13 @@
  */
 package org.springframework.data.solr.core.query;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.springframework.util.Assert;
+
+import java.util.*;
 
 /**
  * Set of options available to get field statistics.
- * 
+ *
  * @author Francisco Spaeth
  * @since 1.4
  */
@@ -45,7 +39,7 @@ public class StatsOptions {
 
 	/**
 	 * Adds a field to the statistics to be requested.
-	 * 
+	 *
 	 * @param field
 	 * @return
 	 */
@@ -59,7 +53,7 @@ public class StatsOptions {
 
 	/**
 	 * Adds a field via its name to the statistics to be requested.
-	 * 
+	 *
 	 * @param fieldName
 	 * @return
 	 */
@@ -79,7 +73,7 @@ public class StatsOptions {
 
 	/**
 	 * Adds a facet on field to the statistics to be requested.
-	 * 
+	 *
 	 * @param fieldName
 	 * @return
 	 */
@@ -93,7 +87,7 @@ public class StatsOptions {
 
 	/**
 	 * Adds a facet on field to the statistics to be requested.
-	 * 
+	 *
 	 * @param fieldName
 	 * @return
 	 */
@@ -120,7 +114,7 @@ public class StatsOptions {
 
 	/**
 	 * Sets the distinct calculation for a given stats request.
-	 * 
+	 *
 	 * @param calcDistinct
 	 * @return
 	 */
@@ -153,7 +147,7 @@ public class StatsOptions {
 
 	/**
 	 * Set of options available to get field's statistics having a field as context.
-	 * 
+	 *
 	 * @author Francisco Spaeth
 	 * @sice 1.4
 	 */
@@ -168,7 +162,7 @@ public class StatsOptions {
 
 		/**
 		 * Adds a selective facet over stats result of the field being configured.
-		 * 
+		 *
 		 * @param field
 		 * @return
 		 */

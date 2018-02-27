@@ -15,9 +15,6 @@
  */
 package org.springframework.data.solr.repository.query;
 
-import java.lang.reflect.Method;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.core.MethodParameter;
@@ -25,48 +22,51 @@ import org.springframework.data.repository.Repository;
 import org.springframework.data.solr.repository.Boost;
 import org.springframework.data.solr.repository.ProductBean;
 
+import java.lang.reflect.Method;
+import java.util.List;
+
 /**
  * @author Christoph Strobl
  */
 public class SolrParameterTests {
-	
+
 	@Test
 	public void testGetBoost() throws Exception {
 		Method method = getQueryMethodByName("findByNameWithBoost", String.class);
 		MethodParameter methodParam = new MethodParameter(method, 0);
 		SolrParameter parameter = new SolrParameter(methodParam);
-		
+
 		Assert.assertEquals(3.0f, parameter.getBoost(), 0.0f);
 	}
-	
+
 	@Test
 	public void testGetBoostWhereBoostIsNotDefined() throws Exception {
 		Method method = getQueryMethodByName("findByNameWithoutBoost", String.class);
 		MethodParameter methodParam = new MethodParameter(method, 0);
 		SolrParameter parameter = new SolrParameter(methodParam);
-		
+
 		Assert.assertEquals(Float.NaN, parameter.getBoost(), 0.0f);
 	}
-	
+
 	@Test
 	public void testGetBoostWhereBoostIsDefaulted() throws Exception {
 		Method method = getQueryMethodByName("findByNameWithDefaultBoost", String.class);
 		MethodParameter methodParam = new MethodParameter(method, 0);
 		SolrParameter parameter = new SolrParameter(methodParam);
-		
+
 		Assert.assertEquals(Float.NaN, parameter.getBoost(), 0.0f);
 	}
-	
+
 	private Method getQueryMethodByName(String name, Class<?>... parameters) throws Exception {
 		return Repo1.class.getMethod(name, parameters);
 	}
-	
+
 	interface Repo1 extends Repository<ProductBean, String> {
-		
+
 		List<ProductBean> findByNameWithBoost(@Boost(3) String name);
-		
+
 		List<ProductBean> findByNameWithoutBoost(String name);
-		
+
 		List<ProductBean> findByNameWithDefaultBoost(@Boost String name);
 	}
 

@@ -15,14 +15,14 @@
  */
 package org.springframework.data.solr.core.schema;
 
-import java.util.Collection;
-
 import org.springframework.data.mapping.PropertyHandler;
 import org.springframework.data.solr.core.mapping.SolrPersistentEntity;
 import org.springframework.data.solr.core.mapping.SolrPersistentProperty;
 import org.springframework.data.solr.core.schema.SchemaDefinition.FieldDefinition;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
+
+import java.util.Collection;
 
 /**
  * @author Christoph Strobl

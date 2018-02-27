@@ -15,13 +15,13 @@
  */
 package org.springframework.data.solr.core.query.result;
 
-import java.util.Date;
-
 import org.springframework.util.ObjectUtils;
+
+import java.util.Date;
 
 /**
  * Trivial implementation of {@link StatsResult}.
- * 
+ *
  * @author Francisco Spaeth
  * @author Christoph Strobl
  * @since 1.4

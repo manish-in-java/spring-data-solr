@@ -1,12 +1,12 @@
 package org.springframework.data.solr.core.query.result;
 
-import java.util.List;
-
 import org.springframework.data.solr.core.query.Field;
+
+import java.util.List;
 
 /**
  * The most trivial implementation of {@link FacetPivotFieldEntry}.
- * 
+ *
  * @author Francisco Spaeth
  * @author Christoph Strobl
  */

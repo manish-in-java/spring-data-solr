@@ -15,19 +15,12 @@
  */
 package org.springframework.data.solr.core.schema;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.*;
 
 /**
  * @author Christoph Strobl

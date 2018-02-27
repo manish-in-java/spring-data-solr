@@ -15,10 +15,10 @@
  */
 package org.springframework.data.solr.core.query.result;
 
+import lombok.Data;
+
 import java.util.Collection;
 import java.util.List;
-
-import lombok.Data;
 
 /**
  * @author Christoph Strobl

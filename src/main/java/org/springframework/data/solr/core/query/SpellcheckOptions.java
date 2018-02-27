@@ -15,12 +15,12 @@
  */
 package org.springframework.data.solr.core.query;
 
+import org.apache.solr.common.params.SpellingParams;
+
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.apache.solr.common.params.SpellingParams;
 
 /**
  * {@link SpellcheckOptions} allows modification of query parameters targeting the SpellCheck component is designed to
@@ -331,7 +331,7 @@ public class SpellcheckOptions {
 	/**
 	 * Specifies an accuracy value to be used by the spell checking implementation to decide whether a result is
 	 * worthwhile or not. The value is a float between 0 and 1.
-	 * 
+	 *
 	 * @param nr
 	 * @return
 	 */

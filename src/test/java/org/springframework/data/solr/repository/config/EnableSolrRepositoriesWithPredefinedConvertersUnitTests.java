@@ -15,11 +15,6 @@
  */
 package org.springframework.data.solr.repository.config;
 
-import static org.hamcrest.core.IsSame.*;
-import static org.junit.Assert.*;
-
-import java.lang.reflect.Proxy;
-
 import org.apache.solr.client.solrj.SolrClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +32,11 @@ import org.springframework.data.solr.repository.ProductBean;
 import org.springframework.data.solr.repository.support.SimpleSolrRepository;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.lang.reflect.Proxy;
+
+import static org.hamcrest.core.IsSame.sameInstance;
+import static org.junit.Assert.assertThat;
 
 /**
  * @author Christoph Strobl

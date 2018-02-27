@@ -15,14 +15,14 @@
  */
 package org.springframework.data.solr.core.query;
 
+import org.springframework.data.geo.Box;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.Point;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import org.springframework.data.geo.Box;
-import org.springframework.data.geo.Distance;
-import org.springframework.data.geo.Point;
 
 /**
  * @author Christoph Strobl

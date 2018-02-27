@@ -15,11 +15,11 @@
  */
 package org.springframework.data.solr.repository.query;
 
-import java.lang.reflect.Method;
-import java.util.List;
-
 import org.springframework.core.MethodParameter;
 import org.springframework.data.repository.query.Parameters;
+
+import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * @author Christoph Strobl

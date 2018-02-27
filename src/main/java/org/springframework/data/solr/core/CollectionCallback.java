@@ -15,10 +15,10 @@
  */
 package org.springframework.data.solr.core;
 
-import java.io.IOException;
-
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
+
+import java.io.IOException;
 
 /**
  * Callback interface for data access code that works with {@link SolrClient}. To be used with {@link SolrOperations} to

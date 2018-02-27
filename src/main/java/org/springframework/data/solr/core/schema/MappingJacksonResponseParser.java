@@ -15,18 +15,17 @@
  */
 package org.springframework.data.solr.core.schema;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.nio.charset.Charset;
-
-import javax.activation.MimeType;
-import javax.activation.MimeTypeParseException;
-
 import org.apache.solr.client.solrj.ResponseParser;
 import org.apache.solr.common.util.NamedList;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.util.StreamUtils;
+
+import javax.activation.MimeType;
+import javax.activation.MimeTypeParseException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.nio.charset.Charset;
 
 /**
  * @author Christoph Strobl

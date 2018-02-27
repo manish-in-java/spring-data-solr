@@ -1,17 +1,17 @@
 package org.springframework.data.solr.core.query;
 
+import org.springframework.util.Assert;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.util.Assert;
-
 /**
  * The most trivial implementation of {@link PivotField}.
- * 
+ *
  * @author Francisco Spaeth
  * @author Christoph Strobl
- * 
+ *
  */
 public class SimplePivotField implements PivotField {
 
@@ -21,7 +21,7 @@ public class SimplePivotField implements PivotField {
 
 	/**
 	 * Create new {@link SimplePivotField}
-	 * 
+	 *
 	 * @param fieldnames must consist of at least 2 fieldname eg. {@code "field_1", "field_2"} or a single String with
 	 *          comma separated fieldnames like {@code "field_1,field_2"}
 	 */

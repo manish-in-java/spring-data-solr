@@ -15,23 +15,19 @@
  */
 package org.springframework.data.solr.core.query.result;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.common.params.CursorMarkParams;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
+import java.util.*;
+
 /**
  * {@link DelegatingCursor} is a base {@link Cursor} implementation that temporarily holds data fetched in one run and
  * delegates iteration.
- * 
+ *
  * @author Christoph Strobl
  * @param <T>
  */
@@ -95,7 +91,7 @@ public abstract class DelegatingCursor<T> implements Cursor<T> {
 
 	/**
 	 * Move one position next in given source.
-	 * 
+	 *
 	 * @param source
 	 * @return
 	 */
@@ -114,7 +110,7 @@ public abstract class DelegatingCursor<T> implements Cursor<T> {
 
 	/**
 	 * Read data from Solr.
-	 * 
+	 *
 	 * @param nativeQuery The query to execute already positioned at the next cursor mark.
 	 * @return
 	 */
@@ -159,7 +155,7 @@ public abstract class DelegatingCursor<T> implements Cursor<T> {
 
 	/**
 	 * Customization hook for {@link #open()}.
-	 * 
+	 *
 	 * @param cursorMark
 	 */
 	protected void doOpen(String cursorMark) {
@@ -258,7 +254,7 @@ public abstract class DelegatingCursor<T> implements Cursor<T> {
 	/**
 	 * {@link PartialResult} provided by a round trip to SolrClient loading data for an iteration. Also holds the cursor
 	 * mark to use next.
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 * @param <T>
 	 */
@@ -274,7 +270,7 @@ public abstract class DelegatingCursor<T> implements Cursor<T> {
 
 		/**
 		 * Get the next cursor mark to use.
-		 * 
+		 *
 		 * @return
 		 */
 		public String getNextCursorMark() {
@@ -283,7 +279,7 @@ public abstract class DelegatingCursor<T> implements Cursor<T> {
 
 		/**
 		 * Get items returned from server. <br/>
-		 * 
+		 *
 		 * @return never {@literal null}
 		 */
 		public Collection<T> getItems() {

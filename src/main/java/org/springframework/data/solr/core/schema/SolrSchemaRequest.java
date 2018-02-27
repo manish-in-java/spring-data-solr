@@ -15,11 +15,11 @@
  */
 package org.springframework.data.solr.core.schema;
 
-import java.text.MessageFormat;
-import java.util.Collection;
-
 import org.springframework.data.solr.core.schema.SchemaDefinition.FieldDefinition;
 import org.springframework.util.CollectionUtils;
+
+import java.text.MessageFormat;
+import java.util.Collection;
 
 /**
  * @author Christoph Strobl

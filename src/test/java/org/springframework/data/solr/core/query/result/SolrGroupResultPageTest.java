@@ -15,10 +15,6 @@
  */
 package org.springframework.data.solr.core.query.result;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -26,6 +22,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.solr.core.query.Field;
 import org.springframework.data.solr.core.query.Function;
 import org.springframework.data.solr.core.query.Query;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Francisco Spaeth

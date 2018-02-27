@@ -15,15 +15,6 @@
  */
 package org.springframework.data.solr.core.schema;
 
-import static org.hamcrest.core.Is.*;
-import static org.hamcrest.core.IsCollectionContaining.*;
-import static org.hamcrest.core.IsEqual.*;
-import static org.hamcrest.core.IsNull.*;
-import static org.hamcrest.number.IsCloseTo.*;
-import static org.junit.Assert.*;
-import static org.springframework.data.solr.core.schema.SchemaDefinition.CopyFieldDefinition.*;
-import static org.springframework.data.solr.core.schema.SchemaDefinition.FieldDefinition.*;
-
 import org.apache.solr.client.solrj.SolrClient;
 import org.junit.Before;
 import org.junit.Rule;
@@ -34,6 +25,15 @@ import org.springframework.data.solr.core.schema.SchemaDefinition.CopyFieldDefin
 import org.springframework.data.solr.core.schema.SchemaDefinition.FieldDefinition;
 import org.springframework.data.solr.test.util.EmbeddedSolrServer;
 import org.springframework.data.solr.test.util.EmbeddedSolrServer.ClientCache;
+
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.hamcrest.number.IsCloseTo.closeTo;
+import static org.junit.Assert.assertThat;
+import static org.springframework.data.solr.core.schema.SchemaDefinition.CopyFieldDefinition.newCopyFieldDefinition;
+import static org.springframework.data.solr.core.schema.SchemaDefinition.FieldDefinition.newFieldDefinition;
 
 public class DefaultSchemaOperationsTests {
 

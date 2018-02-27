@@ -15,9 +15,6 @@
  */
 package org.springframework.data.solr.core.schema;
 
-import java.io.IOException;
-import java.util.Map;
-
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.request.schema.SchemaRequest;
@@ -30,6 +27,9 @@ import org.springframework.data.solr.core.schema.SchemaDefinition.FieldDefinitio
 import org.springframework.data.solr.core.schema.SchemaDefinition.SchemaField;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
+
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * {@link SchemaOperations} implementation based on {@link SolrTemplate}.

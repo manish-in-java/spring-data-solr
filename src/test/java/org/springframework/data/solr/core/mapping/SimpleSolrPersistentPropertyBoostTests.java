@@ -15,11 +15,6 @@
  */
 package org.springframework.data.solr.core.mapping;
 
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
-import java.util.Arrays;
-import java.util.Collection;
-
 import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,31 +23,34 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
-import org.mockito.Mockito;
 import org.springframework.data.mapping.model.SimpleTypeHolder;
+import org.springframework.data.util.ClassTypeInformation;
 import org.springframework.data.util.TypeInformation;
+
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * @author Christoph Strobl
+ * @author Oliver Gierke
  */
 @RunWith(Parameterized.class)
 public class SimpleSolrPersistentPropertyBoostTests {
-
-	@SuppressWarnings("rawtypes")//
-	private TypeInformation typeInfoMock;
 
 	private SimpleSolrPersistentEntity<BeanWithSolrFieldAnnotation> persistentEntity;
 
 	public @Parameter(0) String propertyName;
 	public @Parameter(1) Float expectedBoost;
 
-	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
-		typeInfoMock = Mockito.mock(TypeInformation.class);
 
-		Mockito.when(typeInfoMock.getType()).thenReturn(BeanWithSolrFieldAnnotation.class);
-		persistentEntity = new SimpleSolrPersistentEntity<BeanWithSolrFieldAnnotation>(typeInfoMock);
+		TypeInformation<BeanWithSolrFieldAnnotation> typeInformation = ClassTypeInformation
+				.from(BeanWithSolrFieldAnnotation.class);
+
+		persistentEntity = new SimpleSolrPersistentEntity<BeanWithSolrFieldAnnotation>(typeInformation);
 	}
 
 	@Parameters(name = "{index}: {0} should be boosted by {1}")
@@ -78,13 +76,13 @@ public class SimpleSolrPersistentPropertyBoostTests {
 
 	static class BeanWithSolrFieldAnnotation {
 
-		@Indexed//
+		@Indexed //
 		private String fieldWithEmptyBoostAnnotation;
 
-		@Indexed(boost = 100)//
+		@Indexed(boost = 100) //
 		private String fieldWithBoostViaIndexedAnnotation;
 
-		@Indexed(boost = Float.NaN)//
+		@Indexed(boost = Float.NaN) //
 		private String fieldWithInvalidBoostViaIndexedAnnotation;
 
 		public String getFieldWithEmptyBoostAnnotation() {

@@ -15,16 +15,16 @@
  */
 package org.springframework.data.solr.core.query;
 
-import java.util.List;
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
+import java.util.List;
+
 /**
  * General purpose {@link Query} abstract decorator.
- * 
+ *
  * @author Francisco Spaeth
  * @author Christoph Strobl
  * @since 1.4
