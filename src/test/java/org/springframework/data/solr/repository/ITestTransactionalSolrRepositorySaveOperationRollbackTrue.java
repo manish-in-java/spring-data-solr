@@ -28,7 +28,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.BeforeTransaction;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -36,8 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("TransactionalSolrRepositoryTest-context.xml")
-@Transactional
-@TransactionConfiguration(defaultRollback = true, transactionManager = "transactionManager")
+@Transactional(transactionManager = "transactionManager")
 public class ITestTransactionalSolrRepositorySaveOperationRollbackTrue extends TransactionalIntegrationTestsBase {
 
 	private static final String ID = "id-tansaction-rolled-back";
@@ -68,7 +66,7 @@ public class ITestTransactionalSolrRepositorySaveOperationRollbackTrue extends T
 	public void testSaveMultipleObjects() {
 		ProductBean bean = new ProductBean();
 		bean.setId(ID);
-		repo.save(Arrays.asList(bean));
+		repo.saveAll(Arrays.asList(bean));
 	}
 
 }

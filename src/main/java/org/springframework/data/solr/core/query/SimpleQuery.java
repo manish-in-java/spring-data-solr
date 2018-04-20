@@ -21,11 +21,12 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
  * Full implementation of {@link Query} that allows multiple options like pagination, grouping,...
- * 
+ *
  * @author Christoph Strobl
  * @author Rosty Kerei
  * @author Luke Corpe
@@ -37,18 +38,18 @@ public class SimpleQuery extends AbstractQuery implements Query, FilterQuery {
 	private List<Field> projectionOnFields = new ArrayList<Field>(0);
 	private List<FilterQuery> filterQueries = new ArrayList<FilterQuery>(0);;
 
-	private Integer offset = null;
-	private Integer rows = null;
+	private @Nullable Long offset = null;
+	private @Nullable Integer rows   = null;
 
 	private Sort sort;
 
-	private Operator defaultOperator;
-	private Integer timeAllowed;
-	private String defType;
+	private @Nullable Operator defaultOperator;
+	private @Nullable Integer timeAllowed;
+	private @Nullable String defType;
 
-	private GroupOptions groupOptions;
-	private StatsOptions statsOptions;
-	private SpellcheckOptions spellcheckOptions;
+	private @Nullable GroupOptions groupOptions;
+	private @Nullable StatsOptions statsOptions;
+	private @Nullable SpellcheckOptions spellcheckOptions;
 
 	public SimpleQuery() {}
 
@@ -71,10 +72,10 @@ public class SimpleQuery extends AbstractQuery implements Query, FilterQuery {
 	 * @param criteria
 	 * @param pageable
 	 */
-	public SimpleQuery(Criteria criteria, Pageable pageable) {
+	public SimpleQuery(Criteria criteria, @Nullable Pageable pageable) {
 		super(criteria);
 
-		if (pageable != null) {
+		if (pageable != null && !pageable.isUnpaged()) {
 			this.offset = pageable.getOffset();
 			this.rows = pageable.getPageSize();
 			this.addSort(pageable.getSort());
@@ -183,7 +184,7 @@ public class SimpleQuery extends AbstractQuery implements Query, FilterQuery {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends Query> T setOffset(Integer offset) {
+	public <T extends Query> T setOffset(Long offset) {
 		this.offset = offset;
 		return (T) this;
 	}
@@ -212,7 +213,7 @@ public class SimpleQuery extends AbstractQuery implements Query, FilterQuery {
 
 	/**
 	 * add grouping on field name
-	 * 
+	 *
 	 * @param fieldname must not be null
 	 * @return
 	 * @deprecated in favor of {@link GroupOptions}
@@ -248,17 +249,18 @@ public class SimpleQuery extends AbstractQuery implements Query, FilterQuery {
 	public Pageable getPageRequest() {
 
 		if (this.rows == null && this.offset == null) {
-			return null;
+			return Pageable.unpaged();
 		}
 
 		int rows = this.rows != null ? this.rows : DEFAULT_PAGE_SIZE;
-		int offset = this.offset != null ? this.offset : 0;
+		long offset = this.offset != null ? this.offset : 0;
 
-		return new SolrPageRequest(rows != 0 ? offset / rows : 0, rows, this.sort);
+		return new SolrPageRequest(rows != 0 ? (int) (offset / rows) : 0, rows, this.sort);
 	}
 
+	@Nullable
 	@Override
-	public Integer getOffset() {
+	public Long getOffset() {
 		return this.offset;
 	}
 

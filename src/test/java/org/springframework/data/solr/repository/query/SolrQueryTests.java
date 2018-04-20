@@ -15,7 +15,6 @@
  */
 package org.springframework.data.solr.repository.query;
 
-import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
@@ -33,7 +32,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -70,7 +69,7 @@ import org.springframework.data.solr.repository.support.MappingSolrEntityInforma
  * @author Francisco Spaeth
  * @author Oliver Gierke
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class SolrQueryTests {
 
 	private @Mock SolrOperations solrOperationsMock;
@@ -360,7 +359,7 @@ public class SolrQueryTests {
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public <T, ID extends Serializable> SolrEntityInformation<T, ID> getEntityInformation(Class<T> domainClass) {
+		public <T, ID> SolrEntityInformation<T, ID> getEntityInformation(Class<T> domainClass) {
 			return (SolrEntityInformation<T, ID>) new SolrEntityInformationImpl(persitentEntityMock);
 		}
 	}

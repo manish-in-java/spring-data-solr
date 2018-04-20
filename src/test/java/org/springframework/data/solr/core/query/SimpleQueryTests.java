@@ -29,6 +29,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.solr.core.query.Query.Operator;
 
+import static org.hamcrest.CoreMatchers.is;
+
 /**
  * @author Christoph Strobl
  * @author Rosty Kerei
@@ -75,7 +77,7 @@ public class SimpleQueryTests {
 	@Test
 	public void testSetPageRequest() {
 		SimpleQuery query = new SimpleQuery();
-		Assert.assertNull(query.getPageRequest());
+		Assert.assertThat(query.getPageRequest().isUnpaged(), is(true));
 		Assert.assertNull(query.getOffset());
 		Assert.assertNull(query.getRows());
 
@@ -83,7 +85,7 @@ public class SimpleQueryTests {
 
 		query.setPageRequest(alteredPage);
 		Assert.assertThat(query.getPageRequest(), IsEqual.equalTo(alteredPage));
-		Assert.assertNull(query.getSort());
+		Assert.assertThat(query.getSort(), IsEqual.equalTo(Sort.unsorted()));
 	}
 
 	@Test
@@ -304,10 +306,10 @@ public class SimpleQueryTests {
 	@Test
 	public void shouldOverridePagableArgsByUsingExplicitSetters() {
 		SimpleQuery query = new SimpleQuery("*:*").setPageRequest(new PageRequest(1, 10));
-		query.setOffset(2);
+		query.setOffset(2L);
 		query.setRows(20);
 
-		Assert.assertThat(query.getOffset(), Is.is(2));
+		Assert.assertThat(query.getOffset(), Is.is(2L));
 		Assert.assertThat(query.getRows(), Is.is(20));
 	}
 }

@@ -17,6 +17,7 @@ package org.springframework.data.solr.core;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Optional;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.response.SolrPingResponse;
@@ -320,8 +321,9 @@ public interface SolrOperations {
 	 * @param query must not be {@literal null}.
 	 * @param clazz must not be {@literal null}.
 	 * @return the first matching object
+	 * @since 3.0
 	 */
-	<T> T queryForObject(Query query, Class<T> clazz);
+	<T> Optional<T> queryForObject(Query query, Class<T> clazz);
 
 	/**
 	 * Execute the query against specific collection and return the first returned object.
@@ -330,9 +332,9 @@ public interface SolrOperations {
 	 * @param query must not be {@literal null}.
 	 * @param clazz must not be {@literal null}.
 	 * @return
-	 * @since 2.1
+	 * @since 3.0
 	 */
-	<T> T queryForObject(String collectionName, Query query, Class<T> clazz);
+	<T> Optional<T> queryForObject(String collectionName, Query query, Class<T> clazz);
 
 	/**
 	 * Execute the query against solr and return the first returned object
@@ -341,9 +343,9 @@ public interface SolrOperations {
 	 * @param clazz must not be {@literal null}.
 	 * @param method must not be {@literal null}.
 	 * @return the first matching object
-	 * @since 2.0
+	 * @since 3.0
 	 */
-	<T> T queryForObject(Query query, Class<T> clazz, RequestMethod method);
+	<T> Optional<T> queryForObject(Query query, Class<T> clazz, RequestMethod method);
 
 	/**
 	 * Execute the query against specific collection and return the first returned object.
@@ -353,9 +355,9 @@ public interface SolrOperations {
 	 * @param clazz must not be {@literal null}.
 	 * @param method must not be {@literal null}.
 	 * @return
-	 * @since 2.1
+	 * @since 3.0
 	 */
-	<T> T queryForObject(String collectionName, Query query, Class<T> clazz, RequestMethod method);
+	<T> Optional<T> queryForObject(String collectionName, Query query, Class<T> clazz, RequestMethod method);
 
 	/**
 	 * Execute the query against solr and return result as {@link Page}.

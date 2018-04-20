@@ -15,21 +15,22 @@
  */
 package org.springframework.data.solr.repository.support;
 
-import static org.springframework.data.querydsl.QueryDslUtils.*;
+import static org.springframework.data.querydsl.QuerydslUtils.*;
 
-import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.WeakHashMap;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.springframework.data.projection.ProjectionFactory;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.core.NamedQueries;
 import org.springframework.data.repository.core.RepositoryInformation;
 import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
+import org.springframework.data.repository.query.EvaluationContextProvider;
 import org.springframework.data.repository.query.QueryLookupStrategy;
 import org.springframework.data.repository.query.QueryLookupStrategy.Key;
 import org.springframework.data.repository.query.RepositoryQuery;
@@ -46,11 +47,12 @@ import org.springframework.data.solr.repository.query.StringBasedSolrQuery;
 import org.springframework.data.solr.server.SolrClientFactory;
 import org.springframework.data.solr.server.support.MulticoreSolrClientFactory;
 import org.springframework.data.solr.server.support.SolrClientUtils;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
  * Factory to create {@link SolrRepository}
- * 
+ *
  * @author Christoph Strobl
  */
 public class SolrRepositoryFactory extends RepositoryFactorySupport {
@@ -108,7 +110,7 @@ public class SolrRepositoryFactory extends RepositoryFactorySupport {
 	}
 
 	@Override
-	public <T, ID extends Serializable> SolrEntityInformation<T, ID> getEntityInformation(Class<T> domainClass) {
+	public <T, ID> SolrEntityInformation<T, ID> getEntityInformation(Class<T> domainClass) {
 		return entityInformationCreator.getEntityInformation(domainClass);
 	}
 
@@ -153,12 +155,12 @@ public class SolrRepositoryFactory extends RepositoryFactorySupport {
 	}
 
 	private static boolean isQueryDslRepository(Class<?> repositoryInterface) {
-		return QUERY_DSL_PRESENT && QueryDslPredicateExecutor.class.isAssignableFrom(repositoryInterface);
+		return QUERY_DSL_PRESENT && QuerydslPredicateExecutor.class.isAssignableFrom(repositoryInterface);
 	}
 
 	@Override
-	protected QueryLookupStrategy getQueryLookupStrategy(Key key) {
-		return new SolrQueryLookupStrategy();
+	protected Optional<QueryLookupStrategy> getQueryLookupStrategy(@Nullable Key key, EvaluationContextProvider evaluationContextProvider) {
+		return Optional.of(new SolrQueryLookupStrategy());
 	}
 
 	/**

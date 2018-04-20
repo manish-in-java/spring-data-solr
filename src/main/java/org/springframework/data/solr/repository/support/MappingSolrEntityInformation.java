@@ -24,13 +24,13 @@ import org.springframework.data.solr.repository.query.SolrEntityInformation;
 
 /**
  * Solr specific implementation of {@link AbstractEntityInformation}
- * 
+ *
  * @param <T>
  * @param <ID>
  * @author Christoph Strobl
  * @author Oliver Gierke
  */
-public class MappingSolrEntityInformation<T, ID extends Serializable> extends PersistentEntityInformation<T, ID>
+public class MappingSolrEntityInformation<T, ID> extends PersistentEntityInformation<T, ID>
 		implements SolrEntityInformation<T, ID> {
 
 	private final SolrPersistentEntity<T> entityMetadata;
@@ -51,7 +51,7 @@ public class MappingSolrEntityInformation<T, ID extends Serializable> extends Pe
 		return entityMetadata.getIdProperty().getFieldName();
 	}
 
-	public String getSolrCoreName() {
+	public String getCollectionName() {
 		return solrCoreName != null ? solrCoreName : entityMetadata.getSolrCoreName();
 	}
 }

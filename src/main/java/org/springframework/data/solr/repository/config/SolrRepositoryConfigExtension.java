@@ -68,7 +68,7 @@ public class SolrRepositoryConfigExtension extends RepositoryConfigurationExtens
 	 * @see org.springframework.data.repository.config.RepositoryConfigurationExtension#getRepositoryFactoryClassName()
 	 */
 	@Override
-	public String getRepositoryFactoryClassName() {
+	public String getRepositoryFactoryBeanClassName() {
 		return SolrRepositoryFactoryBean.class.getName();
 	}
 

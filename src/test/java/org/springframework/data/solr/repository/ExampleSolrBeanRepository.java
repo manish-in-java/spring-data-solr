@@ -16,11 +16,14 @@
 package org.springframework.data.solr.repository;
 
 import org.springframework.data.solr.ExampleSolrBean;
+import org.springframework.data.solr.core.SolrOperations;
 import org.springframework.data.solr.repository.support.SimpleSolrRepository;
 
 /**
  * @author Christoph Strobl
  */
 public class ExampleSolrBeanRepository extends SimpleSolrRepository<ExampleSolrBean, String> {
-
+  public ExampleSolrBeanRepository(Class<ExampleSolrBean> entityClass, SolrOperations solrOperations) {
+		super(entityClass, solrOperations);
+	}
 }

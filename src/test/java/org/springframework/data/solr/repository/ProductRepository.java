@@ -57,8 +57,6 @@ public interface ProductRepository extends SolrCrudRepository<ProductBean, Strin
 
 	List<ProductBean> findByNameIsNotNull();
 
-	ProductBean findById(String id);
-
 	List<ProductBean> findByAvailableTrue();
 
 	List<ProductBean> findByAvailableFalse();

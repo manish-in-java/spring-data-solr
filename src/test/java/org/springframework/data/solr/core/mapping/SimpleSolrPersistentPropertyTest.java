@@ -21,8 +21,10 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.annotation.Reference;
 import org.springframework.data.mapping.PersistentEntity;
+import org.springframework.data.mapping.model.Property;
 import org.springframework.data.mapping.model.SimpleTypeHolder;
 import org.springframework.data.solr.repository.Score;
+import org.springframework.data.util.ClassTypeInformation;
 import org.springframework.data.util.TypeInformation;
 
 import java.beans.IntrospectionException;
@@ -56,7 +58,8 @@ public class SimpleSolrPersistentPropertyTest {
 		when(owner.getTypeInformation()).thenReturn(typeInformation);
 		when(typeInformation.getProperty("myScoreProperty")).thenReturn((TypeInformation) typeInformation);
 
-		SimpleSolrPersistentProperty property = new SimpleSolrPersistentProperty(field, propertyDescriptor, owner,
+		SimpleSolrPersistentProperty property = new SimpleSolrPersistentProperty(
+				Property.of(ClassTypeInformation.from(BeanWithScore.class), field, propertyDescriptor), owner,
 				simpleTypeHolder);
 
 		assertTrue(property.isScoreProperty());
@@ -73,7 +76,8 @@ public class SimpleSolrPersistentPropertyTest {
 		when(owner.getTypeInformation()).thenReturn(typeInformation);
 		when(typeInformation.getProperty("reference")).thenReturn((TypeInformation) typeInformation);
 
-		SimpleSolrPersistentProperty property = new SimpleSolrPersistentProperty(field, propertyDescriptor, owner,
+		SimpleSolrPersistentProperty property = new SimpleSolrPersistentProperty(
+				Property.of(ClassTypeInformation.from(BeanWithScore.class), field, propertyDescriptor), owner,
 				simpleTypeHolder);
 
 		assertFalse(property.isAssociation());

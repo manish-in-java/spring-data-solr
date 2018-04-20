@@ -54,13 +54,14 @@ import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.core.query.Query.Operator;
 import org.springframework.data.solr.core.query.QueryStringHolder;
 import org.springframework.data.solr.core.query.SolrDataQuery;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 /**
  * Base Implementation of {@link QueryParser} providing common functions for creating
  * {@link org.apache.solr.client.solrj.SolrQuery}.
- * 
+ *
  * @author Christoph Strobl
  * @author Francisco Spaeth
  * @author Radek Mensik
@@ -126,7 +127,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * add another {@link PredicateProcessor}
-	 * 
+	 *
 	 * @param processor
 	 */
 	public void addPredicateProcessor(PredicateProcessor processor) {
@@ -169,7 +170,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 	/**
 	 * Iterates criteria list and concats query string fragments to form a valid query string to be used with
 	 * {@link org.apache.solr.client.solrj.SolrQuery#setQuery(String)}
-	 * 
+	 *
 	 * @param criteria
 	 * @return
 	 */
@@ -179,8 +180,8 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Creates query string representation of a single critiera
-	 * 
-	 * @param criteria
+	 *
+	 * @param part
 	 * @return
 	 */
 	protected String createQueryFragmentForCriteria(Criteria part) {
@@ -237,7 +238,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Create {@link SolrClient} readable String representation for {@link CalculatedField}.
-	 * 
+	 *
 	 * @param calculatedField
 	 * @return
 	 * @since 1.1
@@ -250,7 +251,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Create {@link SolrClient} readable String representation for {@link Function}
-	 * 
+	 *
 	 * @param function
 	 * @return
 	 * @since 1.1
@@ -290,7 +291,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Prepend {@code !join from= to=} to given queryString
-	 * 
+	 *
 	 * @param queryString
 	 * @param query
 	 * @return
@@ -307,15 +308,15 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Append pagination information {@code start, rows} to {@link SolrQuery}
-	 * 
+	 *
 	 * @param query
 	 * @param offset
 	 * @param rows
 	 */
-	protected void appendPagination(SolrQuery query, Integer offset, Integer rows) {
+	protected void appendPagination(SolrQuery query, @Nullable Long offset, @Nullable Integer rows) {
 
 		if (offset != null && offset.intValue() >= 0) {
-			query.setStart(offset);
+			query.setStart(offset.intValue());
 		}
 		if (rows != null && rows.intValue() >= 0) {
 			query.setRows(rows);
@@ -324,7 +325,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Append field list to {@link SolrQuery}
-	 * 
+	 *
 	 * @param solrQuery
 	 * @param fields
 	 */
@@ -345,7 +346,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Set {@code q.op} parameter for {@link SolrQuery}
-	 * 
+	 *
 	 * @param solrQuery
 	 * @param defaultOperator
 	 */
@@ -357,7 +358,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Set {@link SolrQuery#setTimeAllowed(Integer)}
-	 * 
+	 *
 	 * @param solrQuery
 	 * @param timeAllowed
 	 */
@@ -369,7 +370,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Set {@code defType} for {@link SolrQuery}
-	 * 
+	 *
 	 * @param solrQuery
 	 * @param defType
 	 */
@@ -381,7 +382,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Set request handler parameter for {@link SolrQuery}
-	 * 
+	 *
 	 * @param solrQuery
 	 * @param requestHandler
 	 */
@@ -412,7 +413,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * {@link PredicateProcessor} creates a solr reable query string representation for a given {@link Predicate}
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 */
 	public interface PredicateProcessor {
@@ -425,7 +426,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 		/**
 		 * Create query string representation of given {@link Predicate}
-		 * 
+		 *
 		 * @param predicate
 		 * @param field
 		 * @return
@@ -487,7 +488,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 	/**
 	 * Base implementation of {@link PredicateProcessor} handling null values and delegating calls to
 	 * {@link BasePredicateProcessor#doProcess(Predicate, Field)}
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 */
 	abstract class BasePredicateProcessor implements PredicateProcessor {
@@ -535,7 +536,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Default implementation of {@link PredicateProcessor} escaping values accordingly
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 */
 	class DefaultProcessor extends BasePredicateProcessor {
@@ -554,7 +555,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Handles {@link Criteria}s with {@link OperationKey#EXPRESSION}
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 */
 	class ExpressionProcessor extends BasePredicateProcessor {
@@ -573,7 +574,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Handles {@link Criteria}s with {@link OperationKey#BETWEEN}
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 */
 	class BetweenProcessor extends BasePredicateProcessor {
@@ -606,7 +607,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Handles {@link Criteria}s with {@link OperationKey#NEAR}
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 */
 	class NearProcessor extends BetweenProcessor {
@@ -646,7 +647,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Handles {@link Criteria}s with {@link OperationKey#WITHIN}
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 */
 	class WithinProcessor extends NearProcessor {
@@ -667,7 +668,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Handles {@link Criteria}s with {@link OperationKey#FUZZY}
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 */
 	class FuzzyProcessor extends BasePredicateProcessor {
@@ -688,7 +689,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Handles {@link Criteria}s with {@link OperationKey#SLOPPY}
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 */
 	class SloppyProcessor extends BasePredicateProcessor {
@@ -710,7 +711,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 	/**
 	 * Handles {@link Criteria}s with {@link OperationKey#CONTAINS}, {@link OperationKey#STARTS_WITH},
 	 * {@link OperationKey#ENDS_WITH}
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 */
 	class WildcardProcessor extends BasePredicateProcessor {
@@ -738,7 +739,7 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 
 	/**
 	 * Handles {@link Criteria} with {@link OperationKey#FUNCTION}
-	 * 
+	 *
 	 * @since 1.1
 	 */
 	class FunctionProcessor extends BasePredicateProcessor {

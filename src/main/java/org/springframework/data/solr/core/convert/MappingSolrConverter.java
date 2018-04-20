@@ -35,11 +35,11 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.CollectionFactory;
 import org.springframework.data.convert.EntityInstantiator;
 import org.springframework.data.convert.EntityInstantiators;
+import org.springframework.data.mapping.MappingException;
 import org.springframework.data.mapping.PersistentPropertyAccessor;
 import org.springframework.data.mapping.PropertyHandler;
 import org.springframework.data.mapping.context.MappingContext;
 import org.springframework.data.mapping.model.ConvertingPropertyAccessor;
-import org.springframework.data.mapping.model.MappingException;
 import org.springframework.data.mapping.model.ParameterValueProvider;
 import org.springframework.data.mapping.model.PersistentEntityParameterValueProvider;
 import org.springframework.data.mapping.model.PropertyValueProvider;
@@ -55,7 +55,7 @@ import org.springframework.util.CollectionUtils;
 /**
  * Implementation of {@link SolrConverter} to read/write {@link org.apache.solr.common.SolrDocument}/
  * {@link SolrInputDocument}. <br/>
- * 
+ *
  * @author Christoph Strobl
  * @author Francisco Spaeth
  */

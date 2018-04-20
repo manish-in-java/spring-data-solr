@@ -15,8 +15,6 @@
  */
 package org.springframework.data.solr.repository.support;
 
-import java.io.Serializable;
-
 import org.springframework.data.mapping.context.MappingContext;
 import org.springframework.data.solr.core.mapping.SolrPersistentEntity;
 import org.springframework.data.solr.core.mapping.SolrPersistentProperty;
@@ -39,7 +37,7 @@ public class SolrEntityInformationCreatorImpl implements SolrEntityInformationCr
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <T, ID extends Serializable> SolrEntityInformation<T, ID> getEntityInformation(Class<T> domainClass) {
+	public <T, ID> SolrEntityInformation<T, ID> getEntityInformation(Class<T> domainClass) {
 		SolrPersistentEntity<T> persistentEntity = (SolrPersistentEntity<T>) mappingContext
 				.getPersistentEntity(domainClass);
 

@@ -65,7 +65,7 @@ import org.springframework.util.ObjectUtils;
  * Implementation of {@link QueryParser}. <br/>
  * Creates executable {@link SolrQuery} from {@link Query} by traversing {@link Criteria}. Reserved characters like
  * {@code +} or {@code -} will be escaped to form a valid query.
- * 
+ *
  * @author Christoph Strobl
  * @author John Dorman
  * @author Rosty Kerei
@@ -82,7 +82,7 @@ public class DefaultQueryParser extends QueryParserBase<SolrDataQuery> {
 
 	/**
 	 * Convert given Query into a SolrQuery executable via {@link org.apache.solr.client.solrj.SolrClient}
-	 * 
+	 *
 	 * @param query
 	 * @return
 	 */
@@ -278,7 +278,7 @@ public class DefaultQueryParser extends QueryParserBase<SolrDataQuery> {
 
 	/**
 	 * Append highlighting parameters to {@link SolrQuery}
-	 * 
+	 *
 	 * @param solrQuery
 	 * @param query
 	 */
@@ -345,8 +345,8 @@ public class DefaultQueryParser extends QueryParserBase<SolrDataQuery> {
 		solrQuery.setFacetMinCount(facetOptions.getFacetMinCount());
 		solrQuery.setFacetLimit(facetOptions.getPageable().getPageSize());
 		if (facetOptions.getPageable().getPageNumber() > 0) {
-			int offset = Math.max(0, facetOptions.getPageable().getOffset());
-			solrQuery.set(FacetParams.FACET_OFFSET, offset);
+			long offset = Math.max(0, facetOptions.getPageable().getOffset());
+			solrQuery.set(FacetParams.FACET_OFFSET, "" + offset);
 		}
 		if (FacetOptions.FacetSort.INDEX.equals(facetOptions.getFacetSort())) {
 			solrQuery.setFacetSort(FacetParams.FACET_SORT_INDEX);
@@ -447,7 +447,7 @@ public class DefaultQueryParser extends QueryParserBase<SolrDataQuery> {
 
 	/**
 	 * Set filter filter queries for {@link SolrQuery}
-	 * 
+	 *
 	 * @param solrQuery
 	 * @param filterQueries
 	 */
@@ -464,7 +464,7 @@ public class DefaultQueryParser extends QueryParserBase<SolrDataQuery> {
 
 	/**
 	 * Append sorting parameters to {@link SolrQuery}
-	 * 
+	 *
 	 * @param solrQuery
 	 * @param sort
 	 */

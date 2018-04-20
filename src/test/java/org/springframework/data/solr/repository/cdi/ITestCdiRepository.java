@@ -18,8 +18,9 @@ package org.springframework.data.solr.repository.cdi;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-import org.apache.webbeans.cditest.CdiTestContainer;
-import org.apache.webbeans.cditest.CdiTestContainerLoader;
+import javax.enterprise.inject.se.SeContainer;
+import javax.enterprise.inject.se.SeContainerInitializer;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,26 +34,27 @@ import org.springframework.data.solr.repository.ProductBean;
  */
 public class ITestCdiRepository {
 
-	private static CdiTestContainer cdiContainer;
+	private static SeContainer cdiContainer;
 	private CdiProductRepository repository;
 	private SamplePersonRepository samplePersonRepository;
 
 	@BeforeClass
-	public static void init() throws Exception {
-		cdiContainer = CdiTestContainerLoader.getCdiContainer();
-		cdiContainer.startApplicationScope();
-		cdiContainer.bootContainer();
+	public static void init() {
+
+		cdiContainer = SeContainerInitializer.newInstance() //
+				.disableDiscovery() //
+				.addPackages(CdiRepositoryClient.class) //
+				.initialize();
 	}
 
 	@AfterClass
-	public static void shutdown() throws Exception {
-		cdiContainer.stopContexts();
-		cdiContainer.shutdownContainer();
+	public static void shutdown() {
+		cdiContainer.close();
 	}
 
 	@Before
 	public void setUp() {
-		CdiRepositoryClient client = cdiContainer.getInstance(CdiRepositoryClient.class);
+		CdiRepositoryClient client = cdiContainer.select(CdiRepositoryClient.class).get();
 		repository = client.getRepository();
 		samplePersonRepository = client.getSamplePersonRepository();
 	}
@@ -67,7 +69,7 @@ public class ITestCdiRepository {
 
 		repository.save(bean);
 
-		Assert.assertTrue(repository.exists(bean.getId()));
+		Assert.assertTrue(repository.existsById(bean.getId()));
 
 		ProductBean retrieved = repository.findOne(bean.getId());
 		Assert.assertNotNull(retrieved);
@@ -76,7 +78,7 @@ public class ITestCdiRepository {
 
 		Assert.assertEquals(1, repository.count());
 
-		Assert.assertTrue(repository.exists(bean.getId()));
+		Assert.assertTrue(repository.existsById(bean.getId()));
 
 		repository.delete(bean);
 

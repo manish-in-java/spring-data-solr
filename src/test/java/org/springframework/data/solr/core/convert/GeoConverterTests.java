@@ -27,6 +27,8 @@ import org.springframework.data.solr.core.convert.GeoConverterTests.PointConvert
 import org.springframework.data.solr.core.geo.GeoConverters;
 import org.springframework.data.solr.core.geo.Point;
 
+import static org.junit.Assert.assertNull;
+
 /**
  * @author Christoph Strobl
  */
@@ -38,7 +40,7 @@ public class GeoConverterTests {
 
 		@Test
 		public void testConvertDistanceToStringWithNull() {
-			Assert.assertNull(GeoConverters.DistanceToStringConverter.INSTANCE.convert(null));
+			assertNull(GeoConverters.DistanceToStringConverter.INSTANCE.convert(null));
 		}
 
 		@Test
@@ -52,9 +54,10 @@ public class GeoConverterTests {
 					GeoConverters.DistanceToStringConverter.INSTANCE.convert(new Distance(1, Metrics.MILES)));
 		}
 
-		@Test
-		public void testConvertDistanceWithNullUnitToString() {
-			Assert.assertEquals("1.0", GeoConverters.DistanceToStringConverter.INSTANCE.convert(new Distance(1, null)));
+		@Test // DATASOLR-31, DATASOLR-408
+		public void testConvertDistanceWithNeutralUnitToString() {
+			Assert.assertEquals("1.0",
+					GeoConverters.DistanceToStringConverter.INSTANCE.convert(new Distance(1, Metrics.NEUTRAL)));
 		}
 	}
 
@@ -62,7 +65,7 @@ public class GeoConverterTests {
 
 		@Test
 		public void testConvertPointToStringWithNull() {
-			Assert.assertNull(GeoConverters.Point3DToStringConverter.INSTANCE.convert(null));
+			assertNull(GeoConverters.Point3DToStringConverter.INSTANCE.convert(null));
 		}
 
 		@Test
@@ -117,5 +120,4 @@ public class GeoConverterTests {
 		}
 
 	}
-
 }

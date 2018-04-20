@@ -18,10 +18,7 @@ package org.springframework.data.solr.repository.support;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
 import org.apache.solr.common.SolrInputDocument;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -31,6 +28,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.SolrOperations;
 import org.springframework.data.solr.core.SolrTransactionSynchronizationAdapterBuilder;
+import org.springframework.data.solr.core.mapping.SimpleSolrMappingContext;
 import org.springframework.data.solr.core.query.Criteria;
 import org.springframework.data.solr.core.query.SimpleFilterQuery;
 import org.springframework.data.solr.core.query.SimpleQuery;
@@ -42,9 +40,9 @@ import org.springframework.util.Assert;
 
 /**
  * Solr specific repository implementation. Likely to be used as target within {@link SolrRepositoryFactory}
- * 
+ *
  * @param <T>
- * @Param <ID>
+ * @param <ID>
  * @author Christoph Strobl
  */
 public class SimpleSolrRepository<T, ID extends Serializable> implements SolrCrudRepository<T, ID> {
@@ -55,46 +53,37 @@ public class SimpleSolrRepository<T, ID extends Serializable> implements SolrCru
 	private String idFieldName = DEFAULT_ID_FIELD;
 	private Class<T> entityClass;
 	private SolrEntityInformation<T, ?> entityInformation;
-
-	public SimpleSolrRepository() {
-
-	}
-
-	/**
-	 * @param solrOperations must not be null
-	 */
-	public SimpleSolrRepository(SolrOperations solrOperations) {
-		Assert.notNull(solrOperations, "SolrOperations must not be null!");
-
-		this.setSolrOperations(solrOperations);
-	}
+	private final String solrCollectionName;
 
 	/**
 	 * @param metadata must not be null
 	 * @param solrOperations must not be null
 	 */
 	public SimpleSolrRepository(SolrEntityInformation<T, ?> metadata, SolrOperations solrOperations) {
-		this(solrOperations);
 		Assert.notNull(metadata, "Metadata must not be null!");
+		Assert.notNull(solrOperations, "SolrOperations must not be null!");
+
 
 		this.entityInformation = metadata;
+		this.solrCollectionName = this.entityInformation.getCollectionName();
+
 		setIdFieldName(this.entityInformation.getIdAttribute());
 		setEntityClass(this.entityInformation.getJavaType());
+		setSolrOperations(solrOperations);
 	}
 
 	/**
-	 * @param solrOperations must not be null
 	 * @param entityClass
+	 * @param solrOperations must not be null
 	 */
-	public SimpleSolrRepository(SolrOperations solrOperations, Class<T> entityClass) {
-		this(solrOperations);
-
-		this.setEntityClass(entityClass);
+	public SimpleSolrRepository(Class<T> entityClass, SolrOperations solrOperations) {
+		this(getEntityInformation(entityClass), solrOperations);
 	}
 
 	@Override
-	public T findOne(ID id) {
-		return getSolrOperations().queryForObject(new SimpleQuery(new Criteria(this.idFieldName).is(id)), getEntityClass());
+	public Optional<T> findById(ID id) {
+		return getSolrOperations().queryForObject(solrCollectionName,
+				new SimpleQuery(new Criteria(this.idFieldName).is(id)), getEntityClass());
 	}
 
 	@Override
@@ -125,7 +114,7 @@ public class SimpleSolrRepository<T, ID extends Serializable> implements SolrCru
 	}
 
 	@Override
-	public Iterable<T> findAll(Iterable<ID> ids) {
+	public Iterable<T> findAllById(Iterable<ID> ids) {
 		org.springframework.data.solr.core.query.Query query = new SimpleQuery(new Criteria(this.idFieldName).in(ids));
 		query.setPageRequest(new SolrPageRequest(0, (int) count(query)));
 
@@ -152,7 +141,7 @@ public class SimpleSolrRepository<T, ID extends Serializable> implements SolrCru
 	}
 
 	@Override
-	public <S extends T> Iterable<S> save(Iterable<S> entities) {
+	public <S extends T> Iterable<S> saveAll(Iterable<S> entities) {
 		Assert.notNull(entities, "Cannot insert 'null' as a List.");
 
 		if (!(entities instanceof Collection<?>)) {
@@ -166,12 +155,12 @@ public class SimpleSolrRepository<T, ID extends Serializable> implements SolrCru
 	}
 
 	@Override
-	public boolean exists(ID id) {
-		return findOne(id) != null;
+	public boolean existsById(ID id) {
+		return findById(id).isPresent();
 	}
 
 	@Override
-	public void delete(ID id) {
+	public void deleteById(ID id) {
 		Assert.notNull(id, "Cannot delete entity with id 'null'.");
 
 		registerTransactionSynchronisationIfSynchronisationActive();
@@ -183,11 +172,11 @@ public class SimpleSolrRepository<T, ID extends Serializable> implements SolrCru
 	public void delete(T entity) {
 		Assert.notNull(entity, "Cannot delete 'null' entity.");
 
-		delete(Arrays.asList(entity));
+		deleteAll(Arrays.asList(entity));
 	}
 
 	@Override
-	public void delete(Iterable<? extends T> entities) {
+	public void deleteAll(Iterable<? extends T> entities) {
 		Assert.notNull(entities, "Cannot delete 'null' list.");
 
 		ArrayList<String> idsToDelete = new ArrayList<String>();
@@ -299,5 +288,7 @@ public class SimpleSolrRepository<T, ID extends Serializable> implements SolrCru
 			this.solrOperations.commit();
 		}
 	}
-
+	private static SolrEntityInformation getEntityInformation(Class type) {
+		return new SolrEntityInformationCreatorImpl(new SimpleSolrMappingContext()).getEntityInformation(type);
+	}
 }

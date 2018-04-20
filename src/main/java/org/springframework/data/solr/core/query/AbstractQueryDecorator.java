@@ -151,7 +151,7 @@ public abstract class AbstractQueryDecorator implements Query {
 	}
 
 	@Override
-	public <T extends Query> T setOffset(Integer offset) {
+	public <T extends Query> T setOffset(Long offset) {
 		return this.query.setOffset(offset);
 	}
 
@@ -161,7 +161,7 @@ public abstract class AbstractQueryDecorator implements Query {
 	}
 
 	@Override
-	public Integer getOffset() {
+	public Long getOffset() {
 		return this.query.getOffset();
 	}
 

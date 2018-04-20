@@ -63,7 +63,7 @@ import org.springframework.util.StringUtils;
 
 /**
  * Base implementation of a solr specific {@link RepositoryQuery}
- * 
+ *
  * @author Christoph Strobl
  * @author Luke Corpe
  * @author Andrey Paramonov
@@ -416,7 +416,7 @@ public abstract class AbstractSolrQuery implements RepositoryQuery {
 			private static final long serialVersionUID = 8100166028148948968L;
 
 			@Override
-			public int getOffset() {
+			public long getOffset() {
 				return source.getOffset();
 			}
 
@@ -434,7 +434,7 @@ public abstract class AbstractSolrQuery implements RepositoryQuery {
 
 	/**
 	 * Base class for query execution implementing {@link QueryExecution}
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 */
 	abstract class AbstractQueryExecution implements QueryExecution {
@@ -449,7 +449,7 @@ public abstract class AbstractSolrQuery implements RepositoryQuery {
 	 * Implementation to query solr returning list of data without metadata. <br />
 	 * If not pageable argument is set count operation will be executed to determine total number of entities to be
 	 * fetched
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 */
 	class CollectionExecution extends AbstractQueryExecution {
@@ -479,7 +479,7 @@ public abstract class AbstractSolrQuery implements RepositoryQuery {
 					return new PageImpl(java.util.Collections.emptyList(), pageable, getLimit());
 				}
 				if (pageable.getOffset() + pageable.getPageSize() > getLimit()) {
-					query.setPageRequest(getLimitingPageable(pageable, getLimit() - pageable.getOffset()));
+					query.setPageRequest(getLimitingPageable(pageable, getLimit() - (int) pageable.getOffset()));
 				}
 			}
 			return executeFind(query).getContent();
@@ -493,7 +493,7 @@ public abstract class AbstractSolrQuery implements RepositoryQuery {
 
 	/**
 	 * Implementation to query solr returning requested {@link Page}
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 */
 	class PagedExecution extends AbstractQueryExecution {
@@ -521,7 +521,7 @@ public abstract class AbstractSolrQuery implements RepositoryQuery {
 						return new PageImpl(java.util.Collections.emptyList(), pageToUse, limit);
 					}
 					if (pageToUse.getOffset() + pageToUse.getPageSize() > limit) {
-						pageToUse = getLimitingPageable(pageToUse, limit - pageToUse.getOffset());
+						pageToUse = getLimitingPageable(pageToUse, limit - (int) pageToUse.getOffset());
 					}
 				}
 			}
@@ -537,7 +537,7 @@ public abstract class AbstractSolrQuery implements RepositoryQuery {
 
 	/**
 	 * Implementation to query solr retuning {@link FacetPage}
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 */
 	class FacetPageExecution extends PagedExecution {
@@ -558,7 +558,7 @@ public abstract class AbstractSolrQuery implements RepositoryQuery {
 
 	/**
 	 * Implementation to execute query returning {@link HighlightPage}
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 */
 	class HighlightPageExecution extends PagedExecution {

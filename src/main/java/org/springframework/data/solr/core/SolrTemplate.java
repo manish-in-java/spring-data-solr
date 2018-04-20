@@ -543,7 +543,7 @@ public class SolrTemplate implements SolrOperations, InitializingBean, Applicati
 	 * @see org.springframework.data.solr.core.SolrOperations#queryForObject(org.springframework.data.solr.core.query.Query, java.lang.Class)
 	 */
 	@Override
-	public <T> T queryForObject(Query query, Class<T> clazz) {
+	public <T> Optional<T> queryForObject(Query query, Class<T> clazz) {
 		return queryForObject(query, clazz, getDefaultRequestMethod());
 	}
 
@@ -551,7 +551,7 @@ public class SolrTemplate implements SolrOperations, InitializingBean, Applicati
 	 * (non-Javadoc)
 	 * @see org.springframework.data.solr.core.SolrOperations#queryForObject(java.lang.String, org.springframework.data.solr.core.query.Query, java.lang.Class)
 	 */
-	public <T> T queryForObject(String collectionName, Query query, Class<T> clazz) {
+	public <T> Optional<T> queryForObject(String collectionName, Query query, Class<T> clazz) {
 		return queryForObject(collectionName, query, clazz, getDefaultRequestMethod());
 	}
 
@@ -560,7 +560,7 @@ public class SolrTemplate implements SolrOperations, InitializingBean, Applicati
 	 * @see org.springframework.data.solr.core.SolrOperations#queryForObject(org.springframework.data.solr.core.query.Query, java.lang.Class, org.springframework.data.solr.core.RequestMethod)
 	 */
 	@Override
-	public <T> T queryForObject(Query query, Class<T> clazz, RequestMethod method) {
+	public <T> Optional<T> queryForObject(Query query, Class<T> clazz, RequestMethod method) {
 		return queryForObject(getSolrCoreOrBeanCollection(clazz), query, clazz, method);
 	}
 
@@ -568,7 +568,7 @@ public class SolrTemplate implements SolrOperations, InitializingBean, Applicati
 	 * (non-Javadoc)
 	 * @see org.springframework.data.solr.core.SolrOperations#queryForObject(java.lang.String, org.springframework.data.solr.core.query.Query, java.lang.Class, org.springframework.data.solr.core.RequestMethod)
 	 */
-	public <T> T queryForObject(String collectionName, Query query, Class<T> clazz, RequestMethod method) {
+	public <T> Optional<T> queryForObject(String collectionName, Query query, Class<T> clazz, RequestMethod method) {
 
 		Assert.notNull(query, "Query must not be 'null'.");
 		Assert.notNull(clazz, "Target class must not be 'null'.");
@@ -580,9 +580,9 @@ public class SolrTemplate implements SolrOperations, InitializingBean, Applicati
 			if (response.getResults().size() > 1) {
 				LOGGER.warn("More than 1 result found for singe result query ('{}'), returning first entry in list");
 			}
-			return convertSolrDocumentListToBeans(response.getResults(), clazz).get(0);
+ 			return Optional.ofNullable(convertSolrDocumentListToBeans(response.getResults(), clazz).get(0));
 		}
-		return null;
+		return Optional.empty();
 
 	}
 

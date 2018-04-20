@@ -19,21 +19,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.lang.Nullable;
 
 /**
  * Solr specific implementation of {@code Pageable} allowing zero sized pages.
- * 
+ *
  * @author Christoph Strobl
  */
 public class SolrPageRequest implements Pageable {
 
-	private Sort sort;
-	private int page;
-	private int size;
+	private @Nullable Sort sort;
+	private int  page;
+	private int  size;
 
 	/**
 	 * Creates a new {@link SolrPageRequest}. Pages are zero indexed.
-	 * 
+	 *
 	 * @param page zero-based page index.
 	 * @param size the size of the page to be returned.
 	 */
@@ -43,7 +44,7 @@ public class SolrPageRequest implements Pageable {
 
 	/**
 	 * Creates a new {@link SolrPageRequest} with sort parameters applied.
-	 * 
+	 *
 	 * @param page zero-based page index.
 	 * @param size the size of the page to be returned.
 	 * @param direction the direction of the {@link Sort} to be specified, can be {@literal null}.
@@ -55,7 +56,7 @@ public class SolrPageRequest implements Pageable {
 
 	/**
 	 * Creates a new {@link SolrPageRequest} with sort parameters applied.
-	 * 
+	 *
 	 * @param page zero-based page index.
 	 * @param size the size of the page to be returned.
 	 * @param sort can be {@literal null}.
@@ -89,7 +90,7 @@ public class SolrPageRequest implements Pageable {
 	 * @see org.springframework.data.domain.Pageable#getOffset()
 	 */
 	@Override
-	public int getOffset() {
+	public long getOffset() {
 		return page * size;
 	}
 
@@ -140,7 +141,7 @@ public class SolrPageRequest implements Pageable {
 
 	/**
 	 * Returns the {@link Pageable} requesting the previous {@link Page}.
-	 * 
+	 *
 	 * @return
 	 */
 	public Pageable previous() {

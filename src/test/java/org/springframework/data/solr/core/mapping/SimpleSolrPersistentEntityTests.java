@@ -18,7 +18,6 @@ package org.springframework.data.solr.core.mapping;
 import static org.hamcrest.core.Is.*;
 import static org.hamcrest.core.IsNull.*;
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Rule;
@@ -26,10 +25,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.annotation.Reference;
 import org.springframework.data.mapping.PersistentEntity;
-import org.springframework.data.mapping.model.MappingException;
+import org.springframework.data.mapping.MappingException;
 import org.springframework.data.solr.core.mapping.SimpleSolrPersistentPropertyTest.BeanWithScore;
 import org.springframework.data.solr.repository.Score;
 import org.springframework.data.util.TypeInformation;
@@ -38,7 +37,7 @@ import org.springframework.data.util.TypeInformation;
  * @author Christoph Strobl
  * @author Francisco Spaeth
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class SimpleSolrPersistentEntityTests {
 
 	private static final String CORE_NAME = "core1";

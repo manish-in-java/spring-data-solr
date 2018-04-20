@@ -15,8 +15,6 @@
  */
 package org.springframework.data.solr.repository.query;
 
-import java.io.Serializable;
-
 import org.springframework.data.repository.core.EntityInformation;
 
 /**
@@ -24,18 +22,18 @@ import org.springframework.data.repository.core.EntityInformation;
  * @param <ID>
  * @author Christoph Strobl
  */
-public interface SolrEntityInformation<T, ID extends Serializable> extends EntityInformation<T, ID> {
+public interface SolrEntityInformation<T, ID> extends EntityInformation<T, ID> {
 
 	/**
-	 * get the name of the id attribute
+	 * get the name of the id attribute.
 	 * @return
 	 */
 	String getIdAttribute();
 
 	/**
-	 * get the name of the solr collection the entity resides in
+	 * get the name of the solr collection the entity resides in.
 	 * @return
 	 */
-	String getSolrCoreName();
+	String getCollectionName();
 
 }

@@ -60,7 +60,7 @@ public class BrandRepositoryTest
   @Test
   public void testFind()
   {
-    final Brand brand = repository.findOne(entry.getId());
+    final Brand brand = repository.findById(entry.getId()).get();
 
     assertNotNull(brand);
     assertNotNull(brand.getDescription());

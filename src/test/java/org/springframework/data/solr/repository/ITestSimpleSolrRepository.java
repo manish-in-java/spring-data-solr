@@ -35,10 +35,10 @@ public class ITestSimpleSolrRepository extends AbstractITestWithEmbeddedSolrServ
 
 	@Before
 	public void setUp() {
-		repository = new ExampleSolrBeanRepository();
-		SolrTemplate template = new SolrTemplate(server, "collection1");
+		SolrTemplate template = new SolrTemplate(server);
 		template.afterPropertiesSet();
-		repository.setSolrOperations(template);
+
+		repository = new ExampleSolrBeanRepository(ExampleSolrBean.class, template);
 	}
 
 	@Test
@@ -48,20 +48,20 @@ public class ITestSimpleSolrRepository extends AbstractITestWithEmbeddedSolrServ
 
 		Assert.assertSame(toInsert, savedBean);
 
-		Assert.assertTrue(repository.exists(savedBean.getId()));
+		Assert.assertTrue(repository.existsById(savedBean.getId()));
 
-		ExampleSolrBean retrieved = repository.findOne(savedBean.getId());
+		ExampleSolrBean retrieved = repository.findById(savedBean.getId()).get();
 		Assert.assertNotNull(retrieved);
 		Assert.assertTrue(EqualsBuilder.reflectionEquals(savedBean, retrieved, new String[] { "version" }));
 
 		Assert.assertEquals(1, repository.count());
 
-		Assert.assertTrue(repository.exists(savedBean.getId()));
+		Assert.assertTrue(repository.existsById(savedBean.getId()));
 
 		repository.delete(savedBean);
 
 		Assert.assertEquals(0, repository.count());
-		retrieved = repository.findOne(savedBean.getId());
+		retrieved = repository.findById(savedBean.getId()).get();
 		Assert.assertNull(retrieved);
 	}
 
@@ -73,7 +73,7 @@ public class ITestSimpleSolrRepository extends AbstractITestWithEmbeddedSolrServ
 			toInsert.add(createExampleBeanWithId(Integer.toString(i)));
 		}
 
-		repository.save(toInsert);
+		repository.saveAll(toInsert);
 
 		Assert.assertEquals(objectCount, repository.count());
 

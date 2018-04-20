@@ -142,7 +142,7 @@ public class ITestMappingSolrConverter extends AbstractITestWithEmbeddedSolrServ
 
 		Query query = new SimpleQuery(new Criteria("enumProperty_s").is(LiteralNumberEnum.TWO));
 
-		BeanWithEnum loadedViaProperty = solrTemplate.queryForObject(query, BeanWithEnum.class);
+		BeanWithEnum loadedViaProperty = solrTemplate.queryForObject(query, BeanWithEnum.class).get();
 		assertEquals(bean.id, loadedViaProperty.id);
 		assertEquals(bean.enumProperty, loadedViaProperty.enumProperty);
 	}

@@ -25,6 +25,7 @@ import java.util.Set;
 import org.springframework.data.mapping.Association;
 import org.springframework.data.mapping.PersistentEntity;
 import org.springframework.data.mapping.model.AnnotationBasedPersistentProperty;
+import org.springframework.data.mapping.model.Property;
 import org.springframework.data.mapping.model.SimpleTypeHolder;
 import org.springframework.data.solr.core.query.Criteria;
 import org.springframework.data.solr.repository.Score;
@@ -34,7 +35,7 @@ import org.springframework.util.StringUtils;
 /**
  * Solr specific {@link org.springframework.data.mapping.PersistentProperty} implementation processing taking
  * {@link org.apache.solr.client.solrj.beans.Field} into account
- * 
+ *
  * @author Christoph Strobl
  * @author Francisco Spaeth
  */
@@ -53,9 +54,9 @@ public class SimpleSolrPersistentProperty extends AnnotationBasedPersistentPrope
 		SUPPORTED_ID_PROPERTY_NAMES.add("id");
 	}
 
-	public SimpleSolrPersistentProperty(Field field, PropertyDescriptor propertyDescriptor,
+	public SimpleSolrPersistentProperty(Property property,
 			PersistentEntity<?, SolrPersistentProperty> owner, SimpleTypeHolder simpleTypeHolder) {
-		super(field, propertyDescriptor, owner, simpleTypeHolder);
+		super(property, owner, simpleTypeHolder);
 	}
 
 	@Override
@@ -65,7 +66,7 @@ public class SimpleSolrPersistentProperty extends AnnotationBasedPersistentPrope
 		if (StringUtils.hasText(fieldName) && !SOLRJ_FIELD_ANNOTATION_DEFAULT_VALUE.equals(fieldName)) {
 			return fieldName;
 		}
-		return this.name;
+		return this.getName();
 	}
 
 	private String readAnnotatedFieldName() {

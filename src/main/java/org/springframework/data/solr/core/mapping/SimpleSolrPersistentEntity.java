@@ -28,7 +28,7 @@ import org.springframework.data.annotation.Reference;
 import org.springframework.data.mapping.PersistentEntity;
 import org.springframework.data.mapping.PropertyHandler;
 import org.springframework.data.mapping.model.BasicPersistentEntity;
-import org.springframework.data.mapping.model.MappingException;
+import org.springframework.data.mapping.MappingException;
 import org.springframework.data.solr.repository.Score;
 import org.springframework.data.util.TypeInformation;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
@@ -36,7 +36,7 @@ import org.springframework.util.StringUtils;
 
 /**
  * Solr specific {@link PersistentEntity} implementation holding eg. name of solr core.
- * 
+ *
  * @param <T>
  * @author Christoph Strobl
  * @author Francisco Spaeth
@@ -95,7 +95,7 @@ public class SimpleSolrPersistentEntity<T> extends BasicPersistentEntity<T, Solr
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.springframework.data.solr.core.mapping.SolrPersistentEntity#getSolrCoreName()
+	 * @see org.springframework.data.solr.core.mapping.SolrPersistentEntity#getCollectionName()
 	 */
 	@Override
 	public String getSolrCoreName() {
@@ -166,7 +166,7 @@ public class SimpleSolrPersistentEntity<T> extends BasicPersistentEntity<T, Solr
 	/**
 	 * Handler to inspect {@link SolrPersistentProperty} instances and check that max one can be mapped as {@link Score}
 	 * property.
-	 * 
+	 *
 	 * @author Christpoh Strobl
 	 * @since 1.4
 	 */
@@ -199,7 +199,7 @@ public class SimpleSolrPersistentEntity<T> extends BasicPersistentEntity<T, Solr
 
 	/**
 	 * Handler to inspect {@link SolrPersistentProperty} instances and check usage of {@link Dynamic}.
-	 * 
+	 *
 	 * @author Christoph Strobl
 	 * @since 1.5
 	 */
